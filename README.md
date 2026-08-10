@@ -9,7 +9,7 @@
 
 ## 給玩家：三步安裝
 
-1. 到 [Releases](https://github.com/Jyo238/SpiritVale-SellFavorite/releases) 下載最新的 `SpiritValeSellFavorite_一鍵安裝包_vX.X.X.zip`
+1. 到 [Releases](https://github.com/Jyo238/SpiritVale-SellFavorite/releases) 下載最新的 `SpiritValeSellFavorite_vX.X.X.zip`
 2. 完整解壓縮後，關閉遊戲，雙擊 **`一鍵安裝.bat`**（自動偵測遊戲位置；沒裝過 BepInEx 會自動下載安裝）
 3. 開遊戲。**首次啟動會多花 1~3 分鐘初始化，畫面停住是正常的**（已裝繁中翻譯包者無此等待）
 
