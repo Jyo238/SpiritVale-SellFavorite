@@ -1,0 +1,56 @@
+﻿$ErrorActionPreference = 'Stop'
+Write-Host ''
+Write-Host '================================================' -ForegroundColor Cyan
+Write-Host '  SpiritVale 紫星販賣保護 - 移除' -ForegroundColor Cyan
+Write-Host '================================================' -ForegroundColor Cyan
+Write-Host ''
+
+function Find-Game {
+    $steam = $null
+    try { $steam = (Get-ItemProperty 'HKCU:\Software\Valve\Steam' -ErrorAction Stop).SteamPath } catch {}
+    if (-not $steam) { try { $steam = (Get-ItemProperty 'HKLM:\SOFTWARE\Wow6432Node\Valve\Steam' -ErrorAction Stop).InstallPath } catch {} }
+    $libs = New-Object System.Collections.ArrayList
+    if ($steam) {
+        [void]$libs.Add($steam)
+        $vdf = Join-Path $steam 'steamapps\libraryfolders.vdf'
+        if (Test-Path $vdf) {
+            foreach ($m in [regex]::Matches((Get-Content $vdf -Raw), '"path"\s+"(.+?)"')) {
+                [void]$libs.Add($m.Groups[1].Value.Replace('\\', '\'))
+            }
+        }
+    }
+    foreach ($l in $libs) {
+        $p = Join-Path $l 'steamapps\common\SpiritVale'
+        if (Test-Path (Join-Path $p 'SpiritVale.exe')) { return $p }
+    }
+    return $null
+}
+
+$game = Find-Game
+if (-not $game) {
+    Write-Host '找不到 SpiritVale 安裝位置。' -ForegroundColor Yellow
+    Write-Host '請把遊戲資料夾路徑貼上：'
+    $game = (Read-Host '路徑').Trim('"').Trim()
+}
+if (Get-Process 'SpiritVale' -ErrorAction SilentlyContinue) {
+    Write-Host '偵測到遊戲正在執行中！請「完全關閉遊戲」後再執行一次。' -ForegroundColor Red
+    Write-Host ''; Read-Host '按 Enter 關閉'; return
+}
+
+$dst = Join-Path $game 'BepInEx\plugins\SpiritValeSellFavorite'
+if (Test-Path $dst) {
+    Remove-Item $dst -Recurse -Force
+    Write-Host '已移除紫星販賣保護 Mod。' -ForegroundColor Green
+} else {
+    Write-Host '沒有找到已安裝的 Mod，無需移除。' -ForegroundColor Yellow
+}
+
+Write-Host ''
+Write-Host '紫星標記紀錄與設定檔保留在 BepInEx\config\（檔名含 sellfavorite），' -ForegroundColor Gray
+Write-Host '之後重新安裝會自動接續使用；想徹底清除可手動刪除那兩個檔案。' -ForegroundColor Gray
+Write-Host ''
+Write-Host '若想連 BepInEx 框架一併移除（會影響其他使用 BepInEx 的 Mod）：' -ForegroundColor Gray
+Write-Host '  刪除遊戲目錄下的 BepInEx、dotnet 資料夾，以及' -ForegroundColor Gray
+Write-Host '  winhttp.dll、doorstop_config.ini、.doorstop_version、changelog.txt 四個檔案。' -ForegroundColor Gray
+Write-Host ''
+Read-Host '按 Enter 關閉'
