@@ -50,3 +50,19 @@ dotnet build src\SpiritValeSellFavorite.csproj -c Release
 # 需先讓遊戲（裝好 BepInEx）跑過一次，產生 BepInEx\interop\
 # 產出 DLL 複製到 <遊戲目錄>\BepInEx\plugins\SpiritValeSellFavorite\
 ```
+
+## 📄 免責聲明
+
+本工具為玩家非官方製作，與 SpiritVale 之官方團隊、開發商、發行商均無任何關聯。
+
+遊戲之所有名稱、文字、圖像、美術與相關內容，著作權均歸原開發商所有；本專案僅供玩家學習與遊玩便利之非商業用途。
+
+使用本工具所生之任何後果（包含但不限於帳號受限、資料毀損、遊戲異常或其他損失），概由使用者自行承擔，作者不負任何擔保或賠償責任。
+
+本工具免費提供，嚴禁用於任何商業用途或二次販售。
+
+## 授權
+
+[PolyForm Noncommercial License 1.0.0](LICENSE)：可自由使用、修改、再散布，**但僅限非商業用途**。
+
+先前發布的版本原採 MIT 授權；已經授出的權利無法回溯撤銷，因此本授權自本次變更後的版本起適用。
